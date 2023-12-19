@@ -6,10 +6,8 @@ In here I will be sharing the code we're working on in our weekly lessons as wel
 Here's an overview of what I uploaded:
 
 ### Lessons
-1. Xes N Os
-    A small console api that asks you an even number and then prints out a tree of x's and o's.
-2. Rock Paper Scissors
-    A reduced console version of Rock, paper, Scissors against the Computer.
+1. Xes N Os: A small console api that asks you an even number and then prints out a tree of x's and o's.
+2. Rock Paper Scissors: A reduced console version of Rock, paper, Scissors against the Computer.
 
 ### Snake
 My first project, the game of snake.
