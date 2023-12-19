@@ -2,16 +2,20 @@
 class Player:
     x = 380
     y = 380
-    speed = 1
+    speed = 0.2
     
     def moveRight(self):
-        self.x += self.speed
+        if self.x < 760:
+            self.x += self.speed
 
     def moveLeft(self):
-        self.x -= self.speed
+        if 0 < self.x:
+            self.x -= self.speed
     
     def moveUp(self):
-        self.y += self.speed
+        if 0 < self.y:
+            self.y -= self.speed
     
     def moveDown(self):
-        self.y -= self.speed
+        if self.y < 760:
+            self.y += self.speed
