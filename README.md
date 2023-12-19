@@ -1,7 +1,16 @@
-# GitHub Codespaces ♥️ Jupyter Notebooks
+# GitHub DHBW Codespace
 
-Welcome to your shiny new codespace! We've got everything fired up and running for you to explore Python and Jupyter notebooks.
+## Welcome to my Codespace!
+In here I will be sharing the code we're working on in our weekly lessons as well as my own projects!
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with what you're seeing right now - where you go from here is up to you!
+Here's an overview of what I uploaded:
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+### Lessons
+1. Xes N Os
+    A small console api that asks you an even number and then prints out a tree of x's and o's.
+2. Rock Paper Scissors
+    A reduced console version of Rock, paper, Scissors against the Computer.
+
+### Snake
+My first project, the game of snake.
+The game consists of a character that is moving over the window on key press. The "snake" gains points by collecting randomly spawning objects. After each collected object, the snake grows larger. If the snake bites it's own tail, the game is over. The main goal is to collect as many points and survive as long as possible!
