@@ -9,7 +9,6 @@ class App:
     player = 0
 
     def __init__(self):
-        # start game and create player
         self._running = True
         self._display = None
         self._img = None
@@ -25,14 +24,10 @@ class App:
         self._display.fill((0, 0, 0))
         self._display.blit(self._img, (self.player.x, self.player.y))
         pygame.display.flip()
-    
-    def on_loop(self):
-        pass
 
     def on_event(self, event):
         if event.type == QUIT:
             self._running = False
-
 
     def play(self):
         if self.on_init() == False:
@@ -54,7 +49,7 @@ class App:
             if keys[K_ESCAPE]:
                 self._running = False
 
-            self.on_loop()
+            pass
             self.on_render()
 
         pygame.quit()
