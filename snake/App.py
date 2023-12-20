@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-import asyncio
+import time
 from Player import *
 from Food import *
 
@@ -28,7 +28,7 @@ class App:
     def on_render(self):
         pygame.display.set_caption("Snake Score: " + str(self.score))
         self._display.fill((0, 0, 0))
-        self._display.blit(self._playerImg, (self.player.x, self.player.y))
+        self.player.draw(self._display, self._playerImg)
         self._display.blit(self._foodImg, (self.food.x, self.food.y))
         pygame.display.flip()
 
@@ -41,7 +41,7 @@ class App:
             self.food.setNewPos()
 
     def comparePos(self):
-        if (self.food.x - 15 < int(self.player.x) < self.food.x + 15) and (self.food.y - 15 < int(self.player.y) < self.food.y + 15):
+        if self.food.x - 15 < self.player.x[0] < self.food.x + 15 and self.food.y - 15 < self.player.y[0] < self.food.y + 15:
             self.score += 1
             self.player.eatFood()
             self.food.active = False
@@ -71,6 +71,8 @@ class App:
             pass
             self.comparePos()
             self.on_render()
+
+            time.sleep (100.0 / 1000.0)
 
         pygame.quit()
 
