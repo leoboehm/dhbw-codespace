@@ -1,11 +1,12 @@
 
 class Player:
-    x = 380
-    y = 380
-    speed = 0.2
+    x = 385
+    y = 385
+    speed = 0.1
+    length = 1
     
     def moveRight(self):
-        if self.x < 760:
+        if self.x < 770:
             self.x += self.speed
 
     def moveLeft(self):
@@ -17,5 +18,11 @@ class Player:
             self.y -= self.speed
     
     def moveDown(self):
-        if self.y < 760:
+        if self.y < 770:
             self.y += self.speed
+    
+    def eatFood(self):
+        self.length += 1
+        
+        if self.length % 2 == 1:
+            self.speed += 0.05
