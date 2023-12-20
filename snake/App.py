@@ -40,11 +40,17 @@ class App:
         if not self.food.active:
             self.food.setNewPos()
 
-    def comparePos(self):
+    def checkCollision(self):
+        # food collision, player eats food
         if self.food.x - 15 < self.player.x[0] < self.food.x + 15 and self.food.y - 15 < self.player.y[0] < self.food.y + 15:
             self.score += 1
             self.player.eatFood()
             self.food.active = False
+        
+        # player collision, game ends
+        for i in range(1, self.player.length):
+            if self.player.x[0] == self.player.x[i] and self.player.y[0] == self.player.y[i]:
+                self._running = False
 
     def play(self):
         if self.on_init() == False:
@@ -69,7 +75,7 @@ class App:
                 self._running = False
             
             pass
-            self.comparePos()
+            self.checkCollision()
             self.on_render()
 
             time.sleep (100.0 / 1000.0)
