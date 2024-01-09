@@ -22,8 +22,8 @@ class App:
     def on_init(self):
         pygame.init()
         self._display = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.HWSURFACE)
-        self._playerImg = pygame.image.load("./img/redSquare.png")
-        self._foodImg = pygame.image.load("./img/pinkSquare.png")
+        self._playerImg = pygame.image.load("./img/body.png")
+        self._foodImg = pygame.image.load("./img/apple.png")
 
     def on_render(self):
         pygame.display.set_caption("Snake Score: " + str(self.score))
