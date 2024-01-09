@@ -9,9 +9,9 @@ Here's an overview of what I uploaded:
 1. Xes N Os: A small console api that asks you an even number and then prints out a tree of x's and o's.
 2. Rock Paper Scissors: A reduced console version of Rock, paper, Scissors against the Computer.
 3. Sequels:
-   3.1. Fibonacci: Prints out the first 10 numbers of the fibonacci sequel.
-   3.2. Rows: Takes a number as user input and prints out the number as many times as the number ist high (input 5: "55555")
-   3.3. Prime Checker: Takes a number as user input and prints out whether the number is a prime or not.
+   * Fibonacci: Prints out the first 10 numbers of the fibonacci sequel.
+   * Rows: Takes a number as user input and prints out the number as many times as the number ist high (input 5: "55555")
+   * Prime Checker: Takes a number as user input and prints out whether the number is a prime or not.
 
 ### Snake
 My first project, the game of snake.
