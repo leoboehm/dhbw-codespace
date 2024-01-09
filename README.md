@@ -11,4 +11,4 @@ Here's an overview of what I uploaded:
 
 ### Snake
 My first project, the game of snake.
-The game consists of a character that is moving over the window on key press. The "snake" gains points by collecting randomly spawning objects. After each collection, the snake grows larger. If the snake bites it's own tail, the game is over. The main goal is to collect as many points and survive as long as possible!
+The game consists of a character, the snake, that is moving over the window on key press. The snake gains points by "eating" randomly spawning apples. With each apple, the snake grows larger. If the snake bites it's own tail, the game is over. The main goal is to collect as many apples and survive as long as possible!
