@@ -5,22 +5,27 @@ from Player import *
 from Food import *
 
 class App:
-
-    windowWidth = 800
-    windowHeight = 800
+    windowWidth = 0
+    windowHeight = 0
+    
     player = 0
     score = 0
 
     def __init__(self):
+        pygame.init()
+        pinfo = pygame.display.Info()
+
+        self.windowWidth = pinfo.current_w -10
+        self.windowHeight = pinfo.current_h -100
+
         self._running = True
         self._display = None
         self._playerImg = None
         self._foodImg = None
-        self.player = Player()
-        self.food = Food()
+        self.player = Player(self.windowWidth, self.windowHeight)
+        self.food = Food(self.windowWidth, self.windowHeight)
     
     def on_init(self):
-        pygame.init()
         self._display = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.HWSURFACE)
         self._playerImg = pygame.image.load("./img/body.png")
         self._foodImg = pygame.image.load("./img/apple.png")

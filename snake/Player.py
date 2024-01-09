@@ -1,13 +1,22 @@
 
 class Player:
-    x = [385]
-    y = [385]
+    windowWidth = 0
+    windowHeight = 0
+
+    x = []
+    y = []
     speed = 30
     length = 1
     direction = 0
     updateCount = 0
     updateCountMax = 2
     
+    def __init__(self, windowWidth, windowHeight):
+        self.windowWidth = windowWidth-30
+        self.windowHeight = windowHeight-30
+        self.x.append(int(self.windowWidth/2))
+        self.y.append(int(self.windowHeight/2))
+
     def update(self):
         self.updateCount += 1
         if self.updateCount < self.updateCountMax:
@@ -30,22 +39,22 @@ class Player:
             self.updateCount = 0
         
     def moveRight(self):
-        if self.x[0] < 770 and not self.direction == 1:
+        if self.x[0] < self.windowWidth and not self.direction == 1:
             self.direction = 0
             self.update()
 
     def moveLeft(self):
-        if 15 < self.x[0] and not self.direction == 0:
+        if 0 < self.x[0] and not self.direction == 0:
             self.direction = 1
             self.update()
     
     def moveUp(self):
-        if 15 < self.y[0] and not self.direction == 3:
+        if 0 < self.y[0] and not self.direction == 3:
             self.direction = 2
             self.update()
     
     def moveDown(self):
-        if self.y[0] < 770 and not self.direction == 2:
+        if self.y[0] < self.windowHeight and not self.direction == 2:
             self.direction = 3
             self.update()
     
