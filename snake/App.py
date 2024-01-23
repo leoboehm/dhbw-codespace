@@ -19,6 +19,8 @@ class App:
         self.windowHeight = pinfo.current_h -100
 
         self._running = True
+        self.started = False
+        self.lost = False
         self._display = None
         self._playerImg = None
         self._foodImg = None
@@ -31,15 +33,84 @@ class App:
         self._foodImg = pygame.image.load("./img/apple.png")
 
     def on_render(self):
-        pygame.display.set_caption("Snake Score: " + str(self.score))
-        self._display.fill((0, 0, 0))
-        self.player.draw(self._display, self._playerImg)
-        self._display.blit(self._foodImg, (self.food.x, self.food.y))
-        pygame.display.flip()
+        if self.started:
+            pygame.display.set_caption("Snake Score: " + str(self.score))
+            self._display.fill((0, 0, 0))
+            self.player.draw(self._display, self._playerImg)
+            self._display.blit(self._foodImg, (self.food.x, self.food.y))
+            pygame.display.flip()
+        
+        elif self.lost:
+            pygame.display.set_caption("Game over!")
+            self._display.fill((250, 250, 250)) # pygame.image.load("./img/end.png")
+            
+        else:
+            pygame.display.set_caption("Snake")
+            self._display.fill((250, 250, 250)) # pygame.image.load("./img/start.png")
 
     def on_event(self, event):
         if event.type == QUIT:
             self._running = False
+
+    def start(self):
+        if self.on_init() == False:
+            self._running = False
+
+        while self._running:
+            while not self.started and not self.lost:
+                keys = pygame.key.get_pressed()
+                self.on_render()
+
+                if keys[K_SPACE]:
+                    self.started = True
+
+                if keys[K_ESCAPE]:
+                    self._running = False
+
+            while self.started:
+                self.on_render()
+                self.play()
+            
+            while self.lost:
+                keys = pygame.key.get_pressed()
+                self.on_render()
+
+                if keys[K_SPACE]:
+                    self.lost = False
+                    self.start()
+
+                if keys[K_ESCAPE]:
+                    self._running = False
+            
+        pygame.quit()
+
+    def play(self):
+        keys = pygame.key.get_pressed()
+
+        while self.started:
+            keys = pygame.key.get_pressed()
+            pygame.event.pump()
+
+            self.spawnFood()
+
+            if keys[K_RIGHT]:
+                self.player.moveRight()
+            if keys[K_LEFT]:
+                self.player.moveLeft()
+            if keys[K_UP]:
+                self.player.moveUp()
+            if keys[K_DOWN]:
+                self.player.moveDown()
+
+            if keys[K_ESCAPE]:
+                self.started = False
+                self.lost = True
+            
+            pass
+            self.checkCollision()
+            self.on_render()
+
+            time.sleep (100.0 / 1000.0)
 
     def spawnFood(self):
         if not self.food.active:
@@ -55,39 +126,10 @@ class App:
         # player collision, game ends
         for i in range(1, self.player.length):
             if self.player.x[0] == self.player.x[i] and self.player.y[0] == self.player.y[i]:
-                self._running = False
-
-    def play(self):
-        if self.on_init() == False:
-            self._running = False
-        
-        while self._running:
-            pygame.event.pump()
-            keys = pygame.key.get_pressed()
-
-            self.spawnFood()
-
-            if keys[K_RIGHT]:
-                self.player.moveRight()
-            if keys[K_LEFT]:
-                self.player.moveLeft()
-            if keys[K_UP]:
-                self.player.moveUp()
-            if keys[K_DOWN]:
-                self.player.moveDown()
-
-            if keys[K_ESCAPE]:
-                self._running = False
-            
-            pass
-            self.checkCollision()
-            self.on_render()
-
-            time.sleep (100.0 / 1000.0)
-
-        pygame.quit()
+                self.started = False
+                self.lost = True
 
 
 if __name__ == "__main__":
     app = App()
-    app.play()    
+    app.start()    
