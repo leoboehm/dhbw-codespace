@@ -8,7 +8,6 @@ class App:
     windowWidth = 0
     windowHeight = 0
     
-    player = 0
     score = 0
 
     def __init__(self):
@@ -42,11 +41,11 @@ class App:
         
         elif self.lost:
             pygame.display.set_caption("Game over!")
-            self._display.fill((250, 250, 250)) # pygame.image.load("./img/end.png")
+            self._display.fill((0, 0, 250)) # pygame.image.load("./img/end.png")
             
         else:
             pygame.display.set_caption("Snake")
-            self._display.fill((250, 250, 250)) # pygame.image.load("./img/start.png")
+            self._display.fill((0, 0, 250)) # pygame.image.load("./img/start.png")
 
     def on_event(self, event):
         if event.type == QUIT:
@@ -57,23 +56,24 @@ class App:
             self._running = False
 
         while self._running:
-            while not self.started and not self.lost:
+            pygame.event.pump()
+            
+            self.on_render()
+            
+            if self.started:
+                self.play()
+
+            if not self.started and not self.lost:
                 keys = pygame.key.get_pressed()
-                self.on_render()
 
                 if keys[K_SPACE]:
                     self.started = True
 
                 if keys[K_ESCAPE]:
                     self._running = False
-
-            while self.started:
-                self.on_render()
-                self.play()
             
-            while self.lost:
+            if self.lost:
                 keys = pygame.key.get_pressed()
-                self.on_render()
 
                 if keys[K_SPACE]:
                     self.lost = False
@@ -81,36 +81,33 @@ class App:
 
                 if keys[K_ESCAPE]:
                     self._running = False
-            
-        pygame.quit()
+                
+        if not self._running:    
+            pygame.quit()
 
     def play(self):
         keys = pygame.key.get_pressed()
 
-        while self.started:
-            keys = pygame.key.get_pressed()
-            pygame.event.pump()
+        self.spawnFood()
 
-            self.spawnFood()
+        if keys[K_RIGHT]:
+            self.player.moveRight()
+        if keys[K_LEFT]:
+            self.player.moveLeft()
+        if keys[K_UP]:
+            self.player.moveUp()
+        if keys[K_DOWN]:
+            self.player.moveDown()
 
-            if keys[K_RIGHT]:
-                self.player.moveRight()
-            if keys[K_LEFT]:
-                self.player.moveLeft()
-            if keys[K_UP]:
-                self.player.moveUp()
-            if keys[K_DOWN]:
-                self.player.moveDown()
+        if keys[K_ESCAPE]:
+            self.lost = True
+            self.started = False
+        
+        pass
+        self.checkCollision()
+        self.on_render()
 
-            if keys[K_ESCAPE]:
-                self.started = False
-                self.lost = True
-            
-            pass
-            self.checkCollision()
-            self.on_render()
-
-            time.sleep (100.0 / 1000.0)
+        time.sleep (100.0 / 1000.0)
 
     def spawnFood(self):
         if not self.food.active:
