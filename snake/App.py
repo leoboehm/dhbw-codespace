@@ -13,6 +13,7 @@ class App:
     def __init__(self):
         pygame.init()
         pinfo = pygame.display.Info()
+        self.font = pygame.font.Font(pygame.font.get_default_font(), 36)
 
         self.windowWidth = pinfo.current_w -10
         self.windowHeight = pinfo.current_h -100
@@ -41,12 +42,22 @@ class App:
         
         elif self.lost:
             pygame.display.set_caption("Game over!")
-            self._display.fill((0, 0, 250)) # pygame.image.load("./img/end.png")
+            self._display.fill((0, 0, 0))
+            text_surface = self.font.render("GAME OVER", True, (250, 0, 0))
+            self._display.blit(text_surface, (100,50))
+            text_surface = self.font.render("Your Score: " + str(self.score), True, (200, 200, 0))
+            self._display.blit(text_surface, (100,150))
+            text_surface = self.font.render("To go back to the start screen, press [SPACE]", True, (0, 200, 200))
+            self._display.blit(text_surface, (100,250))
             pygame.display.flip()
             
         else:
             pygame.display.set_caption("Snake")
-            self._display.fill((0, 0, 250)) # pygame.image.load("./img/start.png")
+            self._display.fill((0, 0, 0))
+            text_surface = self.font.render("Welcome", True, (0, 200, 200))
+            self._display.blit(text_surface, (100,50))
+            text_surface = self.font.render("To start the game, press [SPACE]", True, (0, 200, 200))
+            self._display.blit(text_surface, (100,150))
             pygame.display.flip()
 
     def on_event(self, event):
@@ -79,7 +90,6 @@ class App:
 
                 if keys[K_SPACE]:
                     self.lost = False
-                    self.start()
 
                 if keys[K_ESCAPE]:
                     self._running = False
