@@ -42,10 +42,12 @@ class App:
         elif self.lost:
             pygame.display.set_caption("Game over!")
             self._display.fill((0, 0, 250)) # pygame.image.load("./img/end.png")
+            pygame.display.flip()
             
         else:
             pygame.display.set_caption("Snake")
             self._display.fill((0, 0, 250)) # pygame.image.load("./img/start.png")
+            pygame.display.flip()
 
     def on_event(self, event):
         if event.type == QUIT:
@@ -100,8 +102,7 @@ class App:
             self.player.moveDown()
 
         if keys[K_ESCAPE]:
-            self.lost = True
-            self.started = False
+            self._running = False
         
         pass
         self.checkCollision()
