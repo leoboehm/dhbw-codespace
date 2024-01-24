@@ -13,7 +13,9 @@ class App:
     def __init__(self):
         pygame.init()
         pinfo = pygame.display.Info()
-        self.font = pygame.font.Font(pygame.font.get_default_font(), 36)
+        self.fontSmall = pygame.font.Font(pygame.font.get_default_font(), 24)
+        self.fontMid = pygame.font.Font(pygame.font.get_default_font(), 36)
+        self.fontBig = pygame.font.Font(pygame.font.get_default_font(), 48)
 
         self.windowWidth = pinfo.current_w -10
         self.windowHeight = pinfo.current_h -100
@@ -31,34 +33,19 @@ class App:
         self._display = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.HWSURFACE)
         self._playerImg = pygame.image.load("./img/body.png")
         self._foodImg = pygame.image.load("./img/apple.png")
+        self._snakeImg = pygame.image.load("./img/snake.png")
 
     def on_render(self):
+        pygame.display.set_caption("Snake")
+
         if self.started:
-            pygame.display.set_caption("Snake Score: " + str(self.score))
-            self._display.fill((0, 0, 0))
-            self.player.draw(self._display, self._playerImg)
-            self._display.blit(self._foodImg, (self.food.x, self.food.y))
-            pygame.display.flip()
+            self.renderIngameScreen()
         
         elif self.lost:
-            pygame.display.set_caption("Game over!")
-            self._display.fill((0, 0, 0))
-            text_surface = self.font.render("GAME OVER", True, (250, 0, 0))
-            self._display.blit(text_surface, (100,50))
-            text_surface = self.font.render("Your Score: " + str(self.score), True, (200, 200, 0))
-            self._display.blit(text_surface, (100,150))
-            text_surface = self.font.render("To go back to the start screen, press [SPACE]", True, (0, 200, 200))
-            self._display.blit(text_surface, (100,250))
-            pygame.display.flip()
+            self.renderEndScreen()
             
         else:
-            pygame.display.set_caption("Snake")
-            self._display.fill((0, 0, 0))
-            text_surface = self.font.render("Welcome", True, (0, 200, 200))
-            self._display.blit(text_surface, (100,50))
-            text_surface = self.font.render("To start the game, press [SPACE]", True, (0, 200, 200))
-            self._display.blit(text_surface, (100,150))
-            pygame.display.flip()
+            self.renderStartScreen()
 
     def on_event(self, event):
         if event.type == QUIT:
@@ -93,9 +80,8 @@ class App:
 
                 if keys[K_ESCAPE]:
                     self._running = False
-                
-        if not self._running:    
-            pygame.quit()
+                 
+        pygame.quit()
 
     def play(self):
         keys = pygame.key.get_pressed()
@@ -119,6 +105,35 @@ class App:
         self.on_render()
 
         time.sleep (100.0 / 1000.0)
+
+    def renderStartScreen(self):
+        self._display.fill((0, 0, 0))
+        self._display.blit(self._snakeImg, (self.windowWidth-320, self.windowHeight-380))
+        self._display.blit(self.fontBig.render("Welcome to Snake!", True, (50, 200, 0)), (50,50))
+        self._display.blit(self.fontMid.render("Instructions:", True, (50, 200, 200)), (50,160))
+        self._display.blit(self.fontSmall.render("- To start the game, press [SPACE]", True, (50, 200, 200)), (50,220))
+        self._display.blit(self.fontSmall.render("- Move the snake using arrow keys", True, (50, 200, 200)), (50,260))
+        self._display.blit(self.fontSmall.render("- To exit the game, press [ESC]", True, (50, 200, 200)), (50,300))
+        self._display.blit(self.fontSmall.render("Eat as many apples as possible without biting your tail!", True, (50, 200, 200)), (50,360))
+        self._display.blit(self.fontBig.render("Good luck!", True, (250, 250, 0)), (150,480))
+        pygame.display.flip()
+  
+    def renderEndScreen(self):
+        self._display.fill((0, 0, 0))
+        self._display.blit(self._snakeImg, (self.windowWidth-320, self.windowHeight-380))
+        self._display.blit(self.fontBig.render("GAME OVER - You lost!", True, (250, 0, 0)), (50,50))
+        self._display.blit(self.fontMid.render("Your Score: " + str(self.score), True, (250, 250, 0)), (50,160))
+        self._display.blit(self.fontSmall.render("- To return to the start screen, press [SPACE]", True, (50, 200, 200)), (50,240))
+        self._display.blit(self.fontSmall.render("- To exit the game, press [ESC]", True, (50, 200, 200)), (50,280))
+        self._display.blit(self.fontBig.render("Thank's for playing!", True, (50, 200, 0)), (150,400))
+        pygame.display.flip()
+    
+    def renderIngameScreen(self):
+        self._display.fill((0, 0, 0))
+        self._display.blit(self.fontSmall.render("Score: " + str(self.score), True, (0, 200, 0)), (10,10))
+        self._display.blit(self._foodImg, (self.food.x, self.food.y))
+        self.player.draw(self._display, self._playerImg)
+        pygame.display.flip()
 
     def spawnFood(self):
         if not self.food.active:

@@ -39,22 +39,22 @@ class Player:
             self.updateCount = 0
         
     def moveRight(self):
-        if self.x[0] < self.windowWidth and not self.direction == 1:
+        if self.x[0] < self.windowWidth-20 and not self.direction == 1:
             self.direction = 0
             self.update()
 
     def moveLeft(self):
-        if 0 < self.x[0] and not self.direction == 0:
+        if 20 < self.x[0] and not self.direction == 0:
             self.direction = 1
             self.update()
     
     def moveUp(self):
-        if 0 < self.y[0] and not self.direction == 3:
+        if 60 < self.y[0] and not self.direction == 3:
             self.direction = 2
             self.update()
     
     def moveDown(self):
-        if self.y[0] < self.windowHeight and not self.direction == 2:
+        if self.y[0] < self.windowHeight-50 and not self.direction == 2:
             self.direction = 3
             self.update()
     

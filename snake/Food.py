@@ -16,5 +16,9 @@ class Food:
     def setNewPos(self):
         self.x = random.randint(0, int(self.windowWidth/30)) * 30
         self.y = random.randint(0, int(self.windowHeight/30)) * 30
+        
+        if self.y < 60 or self.y > self.windowHeight-50 or self.x < 20 or self.x > self.windowWidth-20:
+            self.setNewPos()
+
         self.active = True
     
